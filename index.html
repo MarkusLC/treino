@@ -87,6 +87,7 @@ nav.days .dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-ra
 .rx{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .chip{font:600 .78rem/1 var(--sans);padding:5px 8px;border-radius:999px;background:var(--soft);font-variant-numeric:tabular-nums}
 .chip.main{background:var(--brand-soft)}
+.chip.rest{border:1px solid var(--brand);color:var(--ink);cursor:pointer}
 .cue{margin:8px 0 0;font-size:.85rem;color:var(--muted)}
 .last{margin:8px 0 4px;font-size:.85rem;color:var(--muted)}
 .last .up{color:var(--ok);font-weight:600}
@@ -315,7 +316,7 @@ function renderDay(k){
       lastTxt = `Última: ${last.sets.map(s=>`${s.w||"–"}kg × ${s.r||"–"}`).join(", ")}` + (hit?` <span class="up">· bateu o topo, sobe a carga</span>`:"");
     }
     h+=`<section class="ex"><div class="ex-top"><img src="img/${e.img}.jpg" alt="Toque para ampliar: ${esc(e.name)}" loading="lazy" data-zoom><div><h3>${esc(e.name)}</h3>
-      <div class="rx"><span class="chip${e.main?" main":""}">${e.sets} × ${e.reps[0]}–${e.reps[1]} ${u}</span><span class="chip">descanso ${fmtRest(e.rest)}</span>${e.main?'<span class="chip main">básico · RIR 2–3</span>':""}</div></div></div>
+      <div class="rx"><span class="chip${e.main?" main":""}">${e.sets} × ${e.reps[0]}–${e.reps[1]} ${u}</span><button class="chip rest" data-rest="${k}|${e.id}" aria-label="Iniciar descanso de ${fmtRest(e.rest)}">⏱ ${fmtRest(e.rest)}</button>${e.main?'<span class="chip main">básico · RIR 2–3</span>':""}</div></div></div>
       <p class="cue">${esc(e.cue)}</p>
       <a class="vid" href="https://www.youtube.com/results?search_query=${encodeURIComponent(e.name+" execução correta")}" target="_blank" rel="noopener">▶ Ver vídeo da execução</a>
       <p class="last">${lastTxt}</p><div class="sets">`;
@@ -384,6 +385,7 @@ document.addEventListener("click", ev=>{
   if(ev.target.dataset.zoom!==undefined){ ev.target.parentElement.classList.toggle("big"); return; }
   const t=ev.target.closest("button"); if(!t) return;
   if(t.dataset.tab){ current=t.dataset.tab; ls.set("ul-tab",current); render(); window.scrollTo({top:0}); return; }
+  if(t.dataset.rest){ const [k,e]=t.dataset.rest.split("|"), ex=PLAN[k].ex.find(x=>x.id===e); startTimer(ex.rest, ex.name); return; }
   if(t.dataset.done){
     const [k,e,i]=t.dataset.done.split("|"), s=draft[k][e][+i], ex=PLAN[k].ex.find(x=>x.id===e);
     s.done=!s.done;
