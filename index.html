@@ -78,9 +78,11 @@ nav.days .dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-ra
 .banner{background:var(--brand-soft);border-radius:10px;padding:10px 12px;font-size:.88rem;margin-bottom:12px}
 
 .ex{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 12px 10px;margin-bottom:12px}
-.ex-top{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center}
-.ex-top.noimg{grid-template-columns:1fr}
-.ex img{width:72px;height:72px;object-fit:contain;background:var(--plate);border-radius:10px;display:block}
+.ex-top{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+.ex img{width:96px;height:96px;object-fit:contain;background:var(--plate);border-radius:10px;display:block;cursor:zoom-in}
+.ex-top.big{grid-template-columns:1fr}
+.ex-top.big img{width:100%;height:auto;cursor:zoom-out}
+.vid{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:8px 12px;border-radius:9px;background:var(--brand-soft);color:var(--ink);font-weight:600;font-size:.85rem;text-decoration:none}
 .ex h3{margin:0;font-size:1.05rem;line-height:1.2}
 .rx{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .chip{font:600 .78rem/1 var(--sans);padding:5px 8px;border-radius:999px;background:var(--soft);font-variant-numeric:tabular-nums}
@@ -211,36 +213,36 @@ nav.days .dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-ra
 // main: true = básico de força (RIR 2–3, descanso longo). u = unidade da coluna de reps.
 const PLAN = {
   sa:{tab:"Sup A", sub:"Força", title:"Superior A · força", ex:[
-    {id:"supino-reto", name:"Supino reto com barra", sets:4, reps:[4,6], rest:180, main:true, cue:"Escápulas presas, pés firmes, barra toca o peito sem quicar."},
-    {id:"remada-curvada", name:"Remada curvada com barra", sets:4, reps:[5,7], rest:180, main:true, cue:"Tronco ~45°, coluna neutra, puxa a barra no umbigo."},
+    {id:"supino-reto", img:"supino-reto", name:"Supino reto com barra", sets:4, reps:[4,6], rest:180, main:true, cue:"Escápulas presas, pés firmes, barra toca o peito sem quicar."},
+    {id:"remada-curvada", img:"remada-curvada", name:"Remada curvada com barra", sets:4, reps:[5,7], rest:180, main:true, cue:"Tronco ~45°, coluna neutra, puxa a barra no umbigo."},
     {id:"desenv", name:"Desenvolvimento com barra", img:"desenvolvimento", sets:3, reps:[6,8], rest:150, cue:"Glúteo contraído, sem arquear a lombar."},
     {id:"puxada-sup", name:"Puxada supinada", img:"puxada-supinada", sets:3, reps:[6,8], rest:120, cue:"Peito alto, cotovelos descem rente ao corpo."},
-    {id:"triceps-testa", name:"Tríceps testa (barra W)", sets:3, reps:[8,12], rest:90, cue:"Cotovelos apontados pro teto, descida até a testa."},
+    {id:"triceps-testa", img:"triceps-testa", name:"Tríceps testa (barra W)", sets:3, reps:[8,12], rest:90, cue:"Cotovelos apontados pro teto, descida até a testa."},
     {id:"rosca-dir", name:"Rosca direta", img:"rosca-direta", sets:3, reps:[8,12], rest:90, cue:"Sem balançar o tronco."},
   ]},
   ia:{tab:"Inf A", sub:"Força", title:"Inferior A · força", ex:[
-    {id:"agacha", name:"Agachamento livre", sets:4, reps:[4,6], rest:180, main:true, cue:"Abaixo da paralela se a mobilidade deixar; joelho segue a ponta do pé. Sem rack seguro? Use o hack."},
+    {id:"agacha", img:"agachamento", name:"Agachamento livre", sets:4, reps:[4,6], rest:180, main:true, cue:"Abaixo da paralela se a mobilidade deixar; joelho segue a ponta do pé. Sem rack seguro? Use o hack."},
     {id:"stiff", name:"Stiff", img:"stiff", sets:3, reps:[6,8], rest:150, cue:"Quadril vai pra trás, barra rente à perna, sente o posterior alongar."},
     {id:"leg45", name:"Leg press 45°", img:"leg-press", sets:3, reps:[8,10], rest:120, cue:"Lombar colada no encosto em toda a descida."},
     {id:"flexora", name:"Cadeira flexora", img:"flexora", sets:3, reps:[8,12], rest:90, cue:"Segura 1 s contraído."},
-    {id:"pallof", name:"Pallof press (polia)", sets:3, reps:[10,12], u:"/lado", rest:60, cue:"Anti-rotação: braços estendem, o tronco não gira. Trabalha oblíquos."},
-    {id:"prancha-lat", name:"Prancha lateral", sets:3, reps:[30,45], u:"s/lado", rest:60, cue:"Quadril alto, corpo em linha reta."},
+    {id:"pallof", img:"pallof", name:"Pallof press (polia)", sets:3, reps:[10,12], u:"/lado", rest:60, cue:"Anti-rotação: braços estendem, o tronco não gira. Trabalha oblíquos."},
+    {id:"prancha-lat", img:"prancha-lateral", name:"Prancha lateral", sets:3, reps:[30,45], u:"s/lado", rest:60, cue:"Quadril alto, corpo em linha reta."},
   ]},
   sb:{tab:"Sup B", sub:"Volume", title:"Superior B · volume", ex:[
     {id:"supino-inc", name:"Supino inclinado com halteres", img:"supino-inclinado", sets:3, reps:[8,10], rest:120, cue:"Banco a 30°, desce até alongar o peito."},
     {id:"puxada-ab", name:"Puxada aberta (ou barra fixa)", img:"puxada-supinada", sets:3, reps:[8,10], rest:120, cue:"Pegada pronada, um pouco mais aberta que os ombros."},
     {id:"remada-hal", name:"Remada aberta com halteres", img:"remada-aberta", sets:3, reps:[8,10], rest:120, cue:"Peito apoiado no banco inclinado, cotovelos abertos."},
     {id:"crucifixo", name:"Crucifixo", img:"crucifixo", sets:3, reps:[10,12], rest:90, cue:"Cotovelo levemente flexionado e fixo."},
-    {id:"elev-lat", name:"Elevação lateral", sets:3, reps:[12,15], rest:60, cue:"Sobe até a altura do ombro, sem impulso."},
-    {id:"face-pull", name:"Face pull (polia)", sets:2, reps:[12,15], rest:60, cue:"Puxa a corda na direção da testa, abrindo os cotovelos. Saúde do ombro."},
+    {id:"elev-lat", img:"elevacao-lateral", name:"Elevação lateral", sets:3, reps:[12,15], rest:60, cue:"Sobe até a altura do ombro, sem impulso."},
+    {id:"face-pull", img:"face-pull", name:"Face pull (polia)", sets:2, reps:[12,15], rest:60, cue:"Puxa a corda na direção da testa, abrindo os cotovelos. Saúde do ombro."},
   ]},
   ib:{tab:"Inf B", sub:"Volume", title:"Inferior B · volume", ex:[
-    {id:"terra", name:"Levantamento terra", sets:3, reps:[3,5], rest:180, main:true, cue:"Barra no meio do pé, empurra o chão, coluna neutra. Trap bar vale."},
-    {id:"bulgaro", name:"Agachamento búlgaro", sets:3, reps:[8,10], u:"/perna", rest:90, cue:"Pé de trás no banco, tronco levemente inclinado."},
+    {id:"terra", img:"terra", name:"Levantamento terra", sets:3, reps:[3,5], rest:180, main:true, cue:"Barra no meio do pé, empurra o chão, coluna neutra. Trap bar vale."},
+    {id:"bulgaro", img:"bulgaro", name:"Agachamento búlgaro", sets:3, reps:[8,10], u:"/perna", rest:90, cue:"Pé de trás no banco, tronco levemente inclinado."},
     {id:"extensora", name:"Cadeira extensora", img:"extensora", sets:3, reps:[10,12], rest:90, cue:"Segura 1 s em cima."},
     {id:"flexora-b", name:"Cadeira flexora", img:"flexora", sets:3, reps:[10,12], rest:90, cue:"Segura 1 s contraído."},
-    {id:"carry", name:"Farmer unilateral (1 halter)", sets:3, reps:[30,40], u:"m/lado", rest:60, cue:"Caminha sem inclinar pro lado do peso. É o oblíquo segurando você."},
-    {id:"roda", name:"Roda abdominal", sets:3, reps:[8,12], rest:60, cue:"Lombar não afunda; vai só até onde controla."},
+    {id:"carry", img:"farmer", name:"Farmer unilateral (1 halter)", sets:3, reps:[30,40], u:"m/lado", rest:60, cue:"Caminha sem inclinar pro lado do peso. É o oblíquo segurando você."},
+    {id:"roda", img:"roda", name:"Roda abdominal", sets:3, reps:[8,12], rest:60, cue:"Lombar não afunda; vai só até onde controla."},
   ]},
 };
 const TABS = [...Object.keys(PLAN).map(k=>({k,t:PLAN[k].tab,s:PLAN[k].sub})),{k:"cardio",t:"Cardio",s:"Peso · cintura"},{k:"hist",t:"Histórico",s:"Sessões"}];
@@ -312,9 +314,11 @@ function renderDay(k){
       const hit = last.sets.length>=e.sets && last.sets.every(s=>+s.r>=e.reps[1]);
       lastTxt = `Última: ${last.sets.map(s=>`${s.w||"–"}kg × ${s.r||"–"}`).join(", ")}` + (hit?` <span class="up">· bateu o topo, sobe a carga</span>`:"");
     }
-    h+=`<section class="ex"><div class="ex-top${e.img?"":" noimg"}">${e.img?`<img src="img/${e.img}.jpg" alt="" loading="lazy">`:""}<div><h3>${esc(e.name)}</h3>
+    h+=`<section class="ex"><div class="ex-top"><img src="img/${e.img}.jpg" alt="Toque para ampliar: ${esc(e.name)}" loading="lazy" data-zoom><div><h3>${esc(e.name)}</h3>
       <div class="rx"><span class="chip${e.main?" main":""}">${e.sets} × ${e.reps[0]}–${e.reps[1]} ${u}</span><span class="chip">descanso ${fmtRest(e.rest)}</span>${e.main?'<span class="chip main">básico · RIR 2–3</span>':""}</div></div></div>
-      <p class="cue">${esc(e.cue)}</p><p class="last">${lastTxt}</p><div class="sets">`;
+      <p class="cue">${esc(e.cue)}</p>
+      <a class="vid" href="https://www.youtube.com/results?search_query=${encodeURIComponent(e.name+" execução correta")}" target="_blank" rel="noopener">▶ Ver vídeo da execução</a>
+      <p class="last">${lastTxt}</p><div class="sets">`;
     d[e.id].forEach((s,i)=>{
       h+=`<div class="set ${s.done?"done":""}">
         <span class="n">${i+1}</span>
@@ -377,6 +381,7 @@ function render(){
 
 /* ---------- events ---------- */
 document.addEventListener("click", ev=>{
+  if(ev.target.dataset.zoom!==undefined){ ev.target.parentElement.classList.toggle("big"); return; }
   const t=ev.target.closest("button"); if(!t) return;
   if(t.dataset.tab){ current=t.dataset.tab; ls.set("ul-tab",current); render(); window.scrollTo({top:0}); return; }
   if(t.dataset.done){
