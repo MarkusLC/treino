@@ -283,12 +283,15 @@ function cycleWeek(){
   const first=Math.min(...lifts.map(s=>s.ts));
   return Math.floor((Date.now()-first)/(7*864e5))%7+1;
 }
+// Progressão dupla: todas as séries no topo da faixa → +2,5 kg (superior) ou +5 kg (inferior).
+const hitTop = (e,last)=> !!last && last.sets.length>=e.sets && last.sets.every(s=>+s.r>=e.reps[1]);
+const nextW = (k,e,last,w)=> w!=="" && w!=null && hitTop(e,last) ? String(+w+(k[0]==="i"?5:2.5)) : (w ?? "");
 function ensureDraft(k){
   if(draft[k]) return draft[k];
   const obj={};
   PLAN[k].ex.forEach(e=>{
     const last=lastFor(k,e.id);
-    obj[e.id]=Array.from({length:e.sets},(_,i)=>({w:last?.sets?.[i]?.w ?? last?.sets?.[0]?.w ?? "", r:"", done:false}));
+    obj[e.id]=Array.from({length:e.sets},(_,i)=>({w:nextW(k,e,last,last?.sets?.[i]?.w ?? last?.sets?.[0]?.w ?? ""), r:"", done:false}));
   });
   draft[k]=obj; saveDraft(); return obj;
 }
@@ -312,8 +315,7 @@ function renderDay(k){
     const u=e.u||"reps", last=lastFor(k,e.id);
     let lastTxt="Primeira vez registrando.";
     if(last){
-      const hit = last.sets.length>=e.sets && last.sets.every(s=>+s.r>=e.reps[1]);
-      lastTxt = `Última: ${last.sets.map(s=>`${s.w||"–"}kg × ${s.r||"–"}`).join(", ")}` + (hit?` <span class="up">· bateu o topo, sobe a carga</span>`:"");
+      lastTxt = `Última: ${last.sets.map(s=>`${s.w||"–"}kg × ${s.r||"–"}`).join(", ")}` + (hitTop(e,last)?` <span class="up">· bateu o topo, carga já subiu</span>`:"");
     }
     h+=`<section class="ex"><div class="ex-top"><img src="img/${e.img}.jpg" alt="Toque para ampliar: ${esc(e.name)}" loading="lazy" data-zoom><div><h3>${esc(e.name)}</h3>
       <div class="rx"><span class="chip${e.main?" main":""}">${e.sets} × ${e.reps[0]}–${e.reps[1]} ${u}</span><button class="chip rest" data-rest="${k}|${e.id}" aria-label="Iniciar descanso de ${fmtRest(e.rest)}">⏱ ${fmtRest(e.rest)}</button>${e.main?'<span class="chip main">básico · RIR 2–3</span>':""}</div></div></div>
